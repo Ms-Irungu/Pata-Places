@@ -48,4 +48,4 @@ We will use the **OpenStreetMap Overpass API**, which allows querying geographic
 - **Deployment:** Vercel or Netlify
 
 ---
-Made with ❤️ by **Pata Places Team**
+Made with ❤️ by **Valentine Irungu**
