@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/navbar";
+import SearchBar from "../components/SearchBar"; 
 
 const Home = () => {
   // 1️⃣ Set initial theme to dark
@@ -19,12 +20,11 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen ">
       <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
-      <div className="p-8">
-        <h2 className="text-2xl font-semibold">Welcome to Pata Places</h2>
-        <p>Explore nearby places with ease.</p>
-      </div>
+      <main className="container mx-auto px-4 py-8">
+        <SearchBar />
+      </main>
     </div>
   );
 };
