@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Search, Compass } from 'lucide-react';
 
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({ onSearch, isDarkMode }) => {
     const [query, setQuery] = useState(''); //Initialize state to hold the search query
     
     const handleInputChange = (event) => {
@@ -44,7 +44,9 @@ const SearchBar = ({ onSearch }) => {
             value={query}
             onChange={handleInputChange}
             placeholder="Search for a location..."
-            className="w-full px-4 py-2 pl-10 pr-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`w-full px-4 py-2 pl-10 pr-4 rounded-lg border
+                 ${isDarkMode ? "border-gray-600 bg-gray-700 text-white" : "border-gray-300 bg-white text-gray-900"}  
+                 focus:outline-none focus:ring-2 focus:ring-blue-500`}
         />
         <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
         </div>
