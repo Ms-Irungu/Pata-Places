@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../components/navbar";
 import SearchBar from "../components/SearchBar"; 
 import POICategories from "../components/POICategories";
+import MapDisplay from "../components/MapDisplay"; // Import your map component
 
 const Home = () => {
   // 1️⃣ Set initial theme to dark
@@ -28,6 +29,8 @@ const Home = () => {
         <SearchBar isDarkMode={isDarkMode}/>
         <POICategories isDarkMode={isDarkMode} selectedCategory="all" onCategoryChange={() => {}} />
         {/* Add your map or other components here */}
+        <MapDisplay />
+        {/* You can replace the above MapDisplay with your actual map component */}
       </main>
     </div>
   );
