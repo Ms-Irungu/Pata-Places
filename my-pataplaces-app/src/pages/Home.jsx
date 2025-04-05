@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/navbar";
 import SearchBar from "../components/SearchBar"; 
+import POICategories from "../components/POICategories";
 
 const Home = () => {
   // 1️⃣ Set initial theme to dark
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return localStorage.getItem("theme") === "dark" || !localStorage.getItem("theme");
   });
+
 
   // 2️⃣ Update theme when user toggles
   useEffect(() => {
@@ -24,6 +26,8 @@ const Home = () => {
       <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
       <main className="container mx-auto px-4 py-8">
         <SearchBar isDarkMode={isDarkMode}/>
+        <POICategories isDarkMode={isDarkMode} selectedCategory="all" onCategoryChange={() => {}} />
+        {/* Add your map or other components here */}
       </main>
     </div>
   );
