@@ -3,7 +3,7 @@ import Navbar from "../components/navbar";
 import SearchBar from "../components/SearchBar"; 
 import POICategories from "../components/POICategories";
 import MapDisplay from "../components/MapDisplay"; // Import your map component
-import { fetchPOIs } from "../utilities/fetchPOIs";
+import { fetchPOIs } from "../utilities/fetchPOIs"; //Import your POI Fetcher
 
 
 const Home = () => {
@@ -12,9 +12,11 @@ const Home = () => {
     return localStorage.getItem("theme") === "dark" || !localStorage.getItem("theme");
   });
 
-  const [userLocation, setUserLocation] = useState({ lat: -1.286389, lon: 36.817223 }); // Default to Nairobi
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [center, setCenter] = useState([-1.286389, 36.817223]); // Default: Nairobi
   const [markers, setMarkers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [noResults, setNoResults] = useState(false);
 
 
   // 2️⃣ Update theme when user toggles
@@ -23,52 +25,90 @@ const Home = () => {
     localStorage.setItem("theme", isDarkMode ? "dark" : "light");
   }, [isDarkMode]);
 
-  // Get user location on mount
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setUserLocation({ lat: position.coords.latitude, lon: position.coords.longitude });
-      },
-      (err) => {
-        console.warn("Could not get location, using default Nairobi:", err.message);
-      }
-    );
-  }, []);
+   // 3️⃣ Toggle function
+   const toggleDarkMode = () => {
+    setIsDarkMode((prev) => !prev);
+  };
 
-  // Fetch POIs whenever location or category changes
-  useEffect(() => {
-    if (userLocation.lat && userLocation.lon) {
-      fetchPOIs(userLocation.lat, userLocation.lon, selectedCategory).then(setMarkers);
+  const fetchAndUpdatePOIs = async (lat, lon, category = selectedCategory) => {
+    setLoading(true);
+    setNoResults(false);
+    try {
+      const data = await fetchPOIs(lat, lon, category);
+      setMarkers(data);
+      setCenter([lat, lon]);
+      setNoResults(data.length === 0);
+    } catch (err) {
+      console.error("Error fetching POIs:", err);
+      setNoResults(true);
+    } finally {
+      setLoading(false);
     }
-  }, [userLocation, selectedCategory]);
+  };
+
+  const handleSearch = async (placeName) => {
+    try {
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${placeName}`);
+      const results = await response.json();
+      if (results.length > 0) {
+        const { lat, lon } = results[0];
+        fetchAndUpdatePOIs(parseFloat(lat), parseFloat(lon));
+      } else {
+        setMarkers([]);
+        setNoResults(true);
+      }
+    } catch (err) {
+      console.error("Geocoding error:", err);
+    }
+  };
+
+  const handleUseGPS = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const { latitude, longitude } = pos.coords;
+          fetchAndUpdatePOIs(latitude, longitude);
+        },
+        (error) => {
+          alert("Could not get your location.");
+          console.error(error);
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by your browser.");
+    }
+  };
 
   const handleCategoryChange = (categoryId) => {
     setSelectedCategory(categoryId);
+    fetchAndUpdatePOIs(center[0], center[1], categoryId);
   };
-
-  // 3️⃣ Toggle function
-  const toggleDarkMode = () => {
-    setIsDarkMode((prev) => !prev);
-  };
+ 
 
   return (
     <div className="min-h-screen ">
       <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
       <main className="container mx-auto px-4 py-8">
-        <SearchBar isDarkMode={isDarkMode}/>
+        <SearchBar 
+        isDarkMode={isDarkMode}
+        onSearch={handleSearch}
+        onUseGPS={handleUseGPS}
+        />
         <POICategories 
         isDarkMode = {isDarkMode} 
         selectedCategory = {selectedCategory}
         onCategoryChange = {handleCategoryChange}
         />
+
+        {loading && <p className="text-center mt-6 text-blue-500">Loading places...</p>}
+        {!loading && noResults && <p className="text-center mt-6 text-red-500">No places found.</p>}
+
         {/* Add your map or other components here */}
         <MapDisplay 
-          center={[userLocation.lat, userLocation.lon]} // Center the map on user's location
-          zoom={13} // Default zoom level
-          markers={markers.map(marker => ({ lat: marker.lat, lon: marker.lon, name: marker.name }))} // Convert POIs to markers format
-          isDarkMode={isDarkMode} // Pass dark mode state to the map component if needed
+          center={center} 
+          zoom={13}
+          markers={markers}
         />
-        
       </main>
     </div>
   );

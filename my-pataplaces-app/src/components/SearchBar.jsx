@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Search, Compass } from 'lucide-react';
 
 
-const SearchBar = ({ onSearch, isDarkMode }) => {
+const SearchBar = ({ onSearch, isDarkMode, onUseGPS }) => {
     const [query, setQuery] = useState(''); //Initialize state to hold the search query
     
     const handleInputChange = (event) => {
@@ -18,22 +18,6 @@ const SearchBar = ({ onSearch, isDarkMode }) => {
         setQuery(''); // Clear the input field after submission
         }
     };
-
-    const handleUseGPS = () => {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              console.log("GPS Location:", position.coords);
-            },
-            (error) => {
-              console.error("Error getting location:", error);
-            }
-          );
-        } else {
-          alert("Geolocation is not supported by your browser.");
-        }
-      };
-
 
     return (
         <form onSubmit={handleSubmit} className="w-full max-w-3xl mx-auto mt-4">
@@ -58,7 +42,7 @@ const SearchBar = ({ onSearch, isDarkMode }) => {
         </button>
         <button
           type="button"
-          onClick={handleUseGPS} // Call the GPS function when clicked
+          onClick={onUseGPS} // Call the GPS function when clicked
           className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           <Compass className="h-5 w-5" />
