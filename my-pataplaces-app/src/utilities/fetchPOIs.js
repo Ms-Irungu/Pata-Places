@@ -15,10 +15,13 @@ export const fetchPOIs = async (lat, lon, category = 'all') => {
     try {
       const response = await fetch(url);
       const data = await response.json();
+
       const formatted = data.elements.map(el => ({
         lat: el.lat,
         lon: el.lon,
-        name: el.tags?.name || el.tags?.amenity || 'POI'
+        name: el.tags?.name || el.tags?.amenity || 'Unnamed POI',
+        category: el.tags?.amenity || 'Unknown Category',
+      distance: el.tags?.distance || null // Adding distance, if available
       }));
       return formatted;
     } catch (err) {

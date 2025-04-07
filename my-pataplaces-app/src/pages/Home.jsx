@@ -4,6 +4,8 @@ import SearchBar from "../components/SearchBar";
 import POICategories from "../components/POICategories";
 import MapDisplay from "../components/MapDisplay"; // Import your map component
 import { fetchPOIs } from "../utilities/fetchPOIs"; //Import your POI Fetcher
+import POIList from "../components/POIList";
+
 
 
 const Home = () => {
@@ -17,6 +19,7 @@ const Home = () => {
   const [markers, setMarkers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [noResults, setNoResults] = useState(false);
+  
 
 
   // 2️⃣ Update theme when user toggles
@@ -108,6 +111,10 @@ const Home = () => {
           center={center} 
           zoom={13}
           markers={markers}
+        />
+        <POIList 
+          pois={markers} 
+          isDarkMode={isDarkMode} 
         />
       </main>
     </div>
