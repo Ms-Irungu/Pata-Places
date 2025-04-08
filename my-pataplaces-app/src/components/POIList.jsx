@@ -30,7 +30,7 @@ const POIList = ({ pois, isDarkMode }) => {
               key={poi.id}
               className={`p-4 cursor-pointer transition-colors ${
                 isDarkMode
-                  ? 'text-white  hover:bg-gray-900'
+                  ? 'bg-gray-700 text-white  hover:bg-gray-900'
                   : 'text-black  hover:bg-gray-50'
               }`}
               // Assuming you want to trigger a modal or some event on click, you can handle it here.
@@ -43,14 +43,24 @@ const POIList = ({ pois, isDarkMode }) => {
                 />
                 <div>
                   <h3 className='font-medium'>{poi.name}</h3>
-                  <p className='text-sm text-gray-600'>{poi.category}</p>
+                  <p className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                    {poi.category
+                      .split(' ') // Split the category string into words
+                      .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalizes each word
+                      .join(' ') // Puts the words back together
+                      }
+                  </p>
                   <p className='text-sm text-emerald-600 mt-1'>
-                      <button 
+                    <button
                       className='bg-emerald-500 text-white px-4 py-2 rounded-md hover:bg-emerald-600 transition duration-200'
-                      onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${poi.name}`)}
-                      >
-                        Get Directions
-                      </button>
+                      onClick={() =>
+                        window.open(
+                          `https://www.google.com/maps/dir/?api=1&destination=${poi.name}`
+                        )
+                      }
+                    >
+                      Get Directions
+                    </button>
                   </p>
                 </div>
               </div>
