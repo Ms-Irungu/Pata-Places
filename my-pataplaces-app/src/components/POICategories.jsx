@@ -5,7 +5,9 @@ import {
   Utensils,
   Coffee,
   Hospital,
+  Pill,
   School,
+  University,
   ShoppingBag,
   Hotel,
   Building2
@@ -16,7 +18,9 @@ const categories = [
   { id: 'restaurant', name: 'Restaurants', icon: <Utensils /> },
   { id: 'cafe', name: 'Cafes', icon: <Coffee /> },
   { id: 'hospital', name: 'Hospitals', icon: <Hospital /> },
+  {id: 'pharmacy', name: 'Pharmacies', icon: <Pill /> },
   { id: 'school', name: 'Schools', icon: <School /> },
+  { id: 'university', name: 'Universities', icon: <University /> },
   { id: 'shop', name: 'Shopping', icon: <ShoppingBag /> },
   { id: 'hotel', name: 'Hotels', icon: <Hotel /> },
   { id: 'office', name: 'Offices', icon: <Building2 /> }
