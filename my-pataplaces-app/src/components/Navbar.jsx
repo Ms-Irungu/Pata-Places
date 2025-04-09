@@ -9,7 +9,7 @@ const Navbar = ({ isDarkMode, toggleDarkMode }) => {
     <nav className={`flex flex-col sm:flex-row justify-between items-center sm:px-6 py-4 ${isDarkMode ? "bg-gray-900 text-white" : "bg-white text-black"} shadow-md`}>
       {/* Logo & Name */}
       <div className="flex items-center gap-2 mb-2 sm:mb-0">
-        <MapPin size={24} />
+        <MapPin className="w-6 h-6 sm:w-7 sm:h-7 md:w-5 md:h-5 lg:w-7 lg:h-7" />
         <div>
           <h1 className="text-xl sm:text-lg font-bold">Pata Places</h1>
           <p className="text-xs sm:text-sm">Find the Nearest Places Near You</p>
