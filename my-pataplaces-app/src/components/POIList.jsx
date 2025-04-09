@@ -61,11 +61,12 @@ const POIList = ({ pois, isDarkMode, onSelectPOI }) => {
                   <p className='text-sm text-emerald-600 mt-1'>
                     <button
                       className='bg-emerald-500 text-white px-4 py-2 rounded-md hover:bg-emerald-600 transition duration-200'
-                      onClick={() =>
+                      onClick={(e) => {
+                        e.stopPropagation();
                         window.open(
                           `https://www.google.com/maps/dir/?api=1&destination=${poi.name}`
                         )
-                      }
+                      }}
                     >
                       Get Directions
                     </button>
