@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../components/navbar";
+import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar"; 
 import POICategories from "../components/POICategories";
 import MapDisplay from "../components/MapDisplay"; // Import your map component
