@@ -9,7 +9,7 @@ const FlyToCenter = ({ center }) => {
   useEffect(() => {
     if (center && map) {
       map.flyTo(center, map.getZoom(), {
-        animate: true,
+        // animate: true,
         duration: 1.5 // seconds
       })
     }
