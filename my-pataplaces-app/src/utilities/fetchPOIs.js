@@ -17,6 +17,7 @@ export const fetchPOIs = async (lat, lon, category = 'all') => {
       const data = await response.json();
 
       const formatted = data.elements.map(el => ({
+        id: el.id.toString(), // Ensure ID is a string and always present
         lat: el.lat,
         lon: el.lon,
         name: el.tags?.name || el.tags?.amenity || 'Unnamed POI',

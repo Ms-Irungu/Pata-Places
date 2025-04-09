@@ -1,7 +1,7 @@
 import React from 'react'
 import { MapPin } from 'lucide-react'
 
-const POIList = ({ pois, isDarkMode }) => {
+const POIList = ({ pois, isDarkMode, onSelectPOI }) => {
   return (
     <div
       className={`bg-white mt-6 rounded-lg shadow-md overflow-hidden ${
@@ -28,6 +28,7 @@ const POIList = ({ pois, isDarkMode }) => {
           pois.map(poi => (
             <div
               key={poi.id}
+              onClick={() => onSelectPOI(poi)}
               className={`p-4 cursor-pointer transition-colors ${
                 isDarkMode
                   ? 'bg-gray-700 text-white  hover:bg-gray-900'
@@ -43,12 +44,19 @@ const POIList = ({ pois, isDarkMode }) => {
                 />
                 <div>
                   <h3 className='font-medium'>{poi.name}</h3>
-                  <p className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                    {poi.category
-                      .split(' ') // Split the category string into words
-                      .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalizes each word
-                      .join(' ') // Puts the words back together
-                      }
+                  <p
+                    className={`text-sm ${
+                      isDarkMode ? 'text-gray-300' : 'text-gray-600'
+                    }`}
+                  >
+                    {
+                      poi.category
+                        .split(' ') // Split the category string into words
+                        .map(
+                          word => word.charAt(0).toUpperCase() + word.slice(1)
+                        ) // Capitalizes each word
+                        .join(' ') // Puts the words back together
+                    }
                   </p>
                   <p className='text-sm text-emerald-600 mt-1'>
                     <button

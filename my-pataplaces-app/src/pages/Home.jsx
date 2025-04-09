@@ -19,8 +19,12 @@ const Home = () => {
   const [markers, setMarkers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [noResults, setNoResults] = useState(false);
+  const [selectedPOI, setSelectedPOI] = useState(null);
   
-
+  // Log the selectedPOI whenever it changes
+  useEffect(() => {
+    console.log("Selected POI has changed:", selectedPOI);
+  }, [selectedPOI]);
 
   // 2️⃣ Update theme when user toggles
   useEffect(() => {
@@ -40,6 +44,7 @@ const Home = () => {
       const data = await fetchPOIs(lat, lon, category);
       setMarkers(data);
       setCenter([lat, lon]);
+      setSelectedPOI(null)
       setNoResults(data.length === 0);
     } catch (err) {
       console.error("Error fetching POIs:", err);
@@ -86,6 +91,12 @@ const Home = () => {
     setSelectedCategory(categoryId);
     fetchAndUpdatePOIs(center[0], center[1], categoryId);
   };
+
+  const handleSelectPOI = (poi) => {
+    console.log("POI selected:", poi); // Debugging line to check POI selection
+    setSelectedPOI(poi)
+    setCenter([poi.lat, poi.lon])
+  }
  
 
   return (
@@ -109,12 +120,15 @@ const Home = () => {
         {/* Add your map or other components here */}
         <MapDisplay 
           center={center} 
-          zoom={13}
+          // zoom={13}
           markers={markers}
+          selectedPOI={selectedPOI}
         />
         <POIList 
           pois={markers} 
           isDarkMode={isDarkMode} 
+          onSelectPOI={handleSelectPOI}
+          selectedPOI={selectedPOI}
         />
       </main>
     </div>
