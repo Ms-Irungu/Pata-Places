@@ -23,7 +23,6 @@ We will use the **OpenStreetMap Overpass API**, which allows querying geographic
  │   ├── POICategories.jsx
  │   ├── MapDisplay.jsx
  │   ├── POIList.jsx
- │   ├── POICard.jsx
  │
  ├── /pages
  │   ├── Home.jsx
