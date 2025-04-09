@@ -6,13 +6,13 @@ import { Sun, Moon, MapPin } from "lucide-react";
 // toggleDarkMode is a function that changes the mode from dark to light or vice versa when called.
 const Navbar = ({ isDarkMode, toggleDarkMode }) => {
   return (
-    <nav className={`flex justify-between items-center px-6 py-4 ${isDarkMode ? "bg-gray-900 text-white" : "bg-white text-black"} shadow-md`}>
+    <nav className={`flex flex-col sm:flex-row justify-between items-center sm:px-6 py-4 ${isDarkMode ? "bg-gray-900 text-white" : "bg-white text-black"} shadow-md`}>
       {/* Logo & Name */}
-      <div className="flex items-center gap-2 ml-10">
+      <div className="flex items-center gap-2 mb-2 sm:mb-0">
         <MapPin size={24} />
         <div>
-          <h1 className="text-xl font-bold">Pata Places</h1>
-          <p className="text-sm">Find the Nearest Places Near You</p>
+          <h1 className="text-xl sm:text-lg font-bold">Pata Places</h1>
+          <p className="text-xs sm:text-sm">Find the Nearest Places Near You</p>
         </div>
       </div>
 

@@ -33,7 +33,8 @@ const POICategories = ({ selectedCategory, onCategoryChange, isDarkMode }) => {
         <button
           key={category.id}
           onClick={() => onCategoryChange(category.id)}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium 
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all
+            sm:text-base sm:px-4 sm:py-2 sm:gap-2 $
            ${
              selectedCategory === category.id
                ? 'bg-blue-500 text-white'
